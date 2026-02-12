@@ -3,6 +3,7 @@ import './Signup.css';
 import '@mui/material';
 import { Button, TextField, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import Api from '../../utils/Api';
+import { getUserFriendlyErrorMessage } from '../../utils/ErrorHandler';
 import Loading from '../../composant/Loading/LoadingComponent';
 import { Navigate } from "react-router-dom";
 import { Box } from "@mui/system";
@@ -33,7 +34,8 @@ export default function Signup() {
         password: "",
         first_name: "",
         last_name: "",
-        teacher_code: ""
+        teacher_code: "",
+        api: ""
     })
 
     const formatEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -46,7 +48,8 @@ export default function Signup() {
             password: "",
             first_name: "",
             last_name: "",
-            teacher_code: ""
+            teacher_code: "",
+            api: ""
         });
         event.preventDefault();
         if (validateEmail() && validateFirstName() && validateLastName() && validateUsername() &&
@@ -74,12 +77,20 @@ export default function Signup() {
                     setIsLoading(false);
                 })
                 .catch((error) => {
-                    if (error.response.status === 422) {
+                    const statusCode = error?.response?.status;
+
+                    if (statusCode === 422) {
                         for (const [key, value] of Object.entries(error.response.data.errors)) {
                             setErrors((prevState) => ({ ...prevState, [key]: value[0] }));
                         }
-                        setIsLoading(false);
+                    } else {
+                        // Message de secours lisible quand l'API Laravel est arrêtée/injoignable.
+                        // @author Philippe-Vu Beaulieu
+                        const message = error?.userFriendlyMessage || getUserFriendlyErrorMessage(error);
+                        setErrors((prevState) => ({ ...prevState, api: message }));
                     }
+
+                    setIsLoading(false);
                 });
         }
     }
@@ -358,6 +369,13 @@ export default function Signup() {
                                     }
                                 />
                             </Box>
+
+
+                            {errors.api.length !== 0 && (
+                                <Typography color="error" sx={{ mt: 1, textAlign: "center" }}>
+                                    {errors.api}
+                                </Typography>
+                            )}
 
                             <Button
                                 variant="contained"

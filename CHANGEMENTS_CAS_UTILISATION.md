@@ -69,3 +69,14 @@ Stabiliser la connexion React ↔ API Laravel et améliorer la gestion d'erreurs
   - Normalisation côté React du message API pour afficher une phrase claire:
     - `Le code enseignant est invalide, expiré ou déjà utilisé.`
   - Commentaires en français et ajout de `@author Philippe-Vu Beaulieu` aux sections modifiées.
+
+
+### 7) Messages d'erreur robustes quand l'API Laravel est arrêtée
+- Fichiers:
+  - `ebadge_React/src/pages/Signup/Signup.js`
+  - `ebadge_React/src/pages/Login/Login.js`
+- Actions:
+  - Correction des accès potentiellement invalides à `error.response.status` pour éviter les crashes JS (`Cannot read properties of undefined`).
+  - Utilisation de `getUserFriendlyErrorMessage` / `error.userFriendlyMessage` pour afficher un message propre quand le back-end est injoignable.
+  - Ajout d'un affichage d'erreur global dans l'inscription (`errors.api`) pour éviter les erreurs noir/rouge non contrôlées.
+  - Commentaires en français et ajout de `@author Philippe-Vu Beaulieu` sur les sections modifiées.

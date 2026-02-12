@@ -57,7 +57,6 @@ export function getUserFriendlyErrorMessage(error) {
 
     if (typeof apiMessage === "string" && apiMessage.trim() !== "") {
       return normalizeValidationMessage(apiMessage);
-      return apiMessage;
     }
 
     if (error.response.status >= 500) {
