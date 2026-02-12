@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -47,9 +49,27 @@ class Handler extends ExceptionHandler
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Throwable
+     *
+     * @author Philippe-Vu Beaulieu
      */
     public function render($request, Throwable $exception)
     {
+        // Normalisation des erreurs SQL pour éviter de renvoyer des détails sensibles
+        // (requêtes, noms de colonnes exacts, traces SQL, etc.) au front-end.
+        if ($exception instanceof QueryException) {
+            return response()->json([
+                'message' => 'Erreur SQL: une opération en base de données a échoué.',
+                'error_code' => 'DB_QUERY_ERROR',
+            ], 500);
+        }
+
+        // On conserve une réponse JSON claire pour les erreurs d'authentification API.
+        if ($exception instanceof AuthenticationException) {
+            return response()->json([
+                'message' => 'Unauthenticated.',
+            ], 401);
+        }
+
         return parent::render($request, $exception);
     }
 }
