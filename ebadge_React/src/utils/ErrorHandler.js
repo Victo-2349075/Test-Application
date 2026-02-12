@@ -6,6 +6,34 @@
  */
 
 /**
+ * Normalise certains messages de validation techniques en messages utilisateur.
+ *
+ * @author Philippe-Vu Beaulieu
+ * @param {string} message Message brut reçu de l'API
+ * @returns {string} Message utilisateur normalisé
+ */
+function normalizeValidationMessage(message) {
+  if (typeof message !== "string") {
+    return "";
+  }
+
+  const normalized = message.toLowerCase();
+
+  if (
+    normalized.includes("teacher code") &&
+    (normalized.includes("sélectionné est invalide") || normalized.includes("selected is invalid"))
+  ) {
+    return "Le code enseignant est invalide, expiré ou déjà utilisé.";
+  }
+
+  if (normalized.includes("teacher_code") && normalized.includes("invalid")) {
+    return "Le code enseignant est invalide, expiré ou déjà utilisé.";
+  }
+
+  return message;
+}
+
+/**
  * Détermine si une erreur provient d'une réponse HTTP Axios.
  *
  * @author Philippe-Vu Beaulieu
@@ -28,6 +56,7 @@ export function getUserFriendlyErrorMessage(error) {
     const apiMessage = error?.response?.data?.message;
 
     if (typeof apiMessage === "string" && apiMessage.trim() !== "") {
+      return normalizeValidationMessage(apiMessage);
       return apiMessage;
     }
 

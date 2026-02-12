@@ -10,6 +10,9 @@ use Illuminate\Foundation\Http\FormRequest;
 class TeacherCodeAssignRequest extends FormRequest
 {
     /**
+     * @author Philippe-Vu Beaulieu
+     */
+    /**
      * Définit les règles de validation pour la requête
      *
      * @return array
@@ -21,4 +24,20 @@ class TeacherCodeAssignRequest extends FormRequest
             'teacher_code_id' => 'nullable|exists:teacher_code,id',
         ];
     }
+
+    /**
+     * Définit les messages de validation personnalisés.
+     *
+     * @return array
+     * @author Philippe-Vu Beaulieu
+     */
+    public function messages()
+    {
+        return [
+            'user_id.exists' => "L'utilisateur sélectionné est introuvable.",
+            'teacher_code_id.exists' => 'Le code enseignant sélectionné est invalide.',
+        ];
+    }
+
 }
+

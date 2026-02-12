@@ -57,3 +57,15 @@ Stabiliser la connexion React ↔ API Laravel et améliorer la gestion d'erreurs
 ## Résultat attendu
 - Le crash `TypeError: options.filter is not a function` ne se reproduit plus dans les formulaires concernés.
 - Les `Autocomplete` restent robustes même en cas de réponse API inattendue.
+
+
+### 6) Normalisation du message "teacher code sélectionné est invalide"
+- Fichiers:
+  - `ebadge_laravel/app/Http/Requests/Auth/SignupRequest.php`
+  - `ebadge_laravel/app/Http/Requests/TeacherCode/TeacherCodeAssignRequest.php`
+  - `ebadge_React/src/utils/ErrorHandler.js`
+- Actions:
+  - Ajout de messages de validation Laravel personnalisés pour éviter le message générique SQL/validation trop technique.
+  - Normalisation côté React du message API pour afficher une phrase claire:
+    - `Le code enseignant est invalide, expiré ou déjà utilisé.`
+  - Commentaires en français et ajout de `@author Philippe-Vu Beaulieu` aux sections modifiées.
