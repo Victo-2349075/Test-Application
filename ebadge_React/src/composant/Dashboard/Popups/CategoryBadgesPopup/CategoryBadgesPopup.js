@@ -151,11 +151,13 @@ const CategoryBadgesPopup = ({ isOpen, handleClose, selectedCategory }) => {
                     <form onSubmit={handleSubmit}>
                         <FormControl fullWidth>
                             {/* Champ de sélection du badge à assigner */}
+                            {/* Prévention du crash MUI Autocomplete si leftBadges n'est pas un tableau.
+                                @author Philippe-Vu Beaulieu */}
                             <Autocomplete
                                 id="badge-select"
-                                options={leftBadges}
+                                options={Array.isArray(leftBadges) ? leftBadges : []}
                                 getOptionLabel={(option) => option.title}
-                                value={leftBadges.find(badge => badge.id === badgeIdToAssign) || null}
+                                value={(Array.isArray(leftBadges) ? leftBadges : []).find(badge => badge.id === badgeIdToAssign) || null}
                                 onChange={(event, newValue) => setBadgeIdToAssign(newValue ? newValue.id : null)}
                                 renderInput={(params) => (
                                     <TextField

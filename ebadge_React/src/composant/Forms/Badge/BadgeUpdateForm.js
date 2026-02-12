@@ -22,6 +22,9 @@ function isImage(url) {
  * @returns Le react de la page du formulaire de modification
  * @author Vincent Houle /partiellement
  */
+/**
+ * @author Philippe-Vu Beaulieu
+ */
 export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge, errorBadge }) {
     const badgeDummy = structuredClone(selectedBadge);
     const [titleError, setTitleError] = useState('');
@@ -223,7 +226,7 @@ export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge,
                                         }}
                                         loading={!loading}
                                         id="controllable-states-demo"
-                                        options={categories.map((category) => category)}
+                                        options={Array.isArray(categories) ? categories.map((category) => category) : []}
                                         getOptionLabel={(categories) => categories.name}
                                         isOptionEqualToValue={(option, value) => option.id == value.id}
                                         sx={{ width: 300 }}
