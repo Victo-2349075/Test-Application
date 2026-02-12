@@ -41,8 +41,19 @@ Stabiliser la connexion React ↔ API Laravel et améliorer la gestion d'erreurs
     - `REACT_APP_LARAVEL_RESOURCE_URL`
   - Commentaires en français et ajout de `@author Philippe-Vu Beaulieu`.
 
+
+### 5) Correction du crash runtime MUI `options.filter is not a function`
+- Fichiers:
+  - `ebadge_React/src/composant/PageProfile.js`
+  - `ebadge_React/src/composant/Dashboard/Popups/BadgeAssignationPopup/BadgeAssignationPopup.js`
+  - `ebadge_React/src/composant/Dashboard/Popups/CategoryBadgesPopup/CategoryBadgesPopup.js`
+  - `ebadge_React/src/composant/Forms/Badge/BadgeCreateForm.js`
+  - `ebadge_React/src/composant/Forms/Badge/BadgeUpdateForm.js`
+- Actions:
+  - Sécurisation de la prop `options` des composants `Autocomplete` avec `Array.isArray(...) ? ... : []`.
+  - Sécurisation des recherches (`find`) pour éviter les erreurs quand la donnée API n'est pas un tableau.
+  - Ajout de commentaires en français avec `@author Philippe-Vu Beaulieu` aux endroits modifiés.
+
 ## Résultat attendu
-- Le front ne casse plus quand l'API est indisponible.
-- Les erreurs SQL sont renvoyées proprement côté API (sans exposer des détails sensibles).
-- Le projet fournit un point unique de gestion d'erreurs côté React.
-- La configuration API/ressources côté front est plus claire via `.env.example`.
+- Le crash `TypeError: options.filter is not a function` ne se reproduit plus dans les formulaires concernés.
+- Les `Autocomplete` restent robustes même en cas de réponse API inattendue.
