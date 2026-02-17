@@ -137,6 +137,14 @@ return [
         'city_code' => [
             'in' => 'Veuillez choisir une ville valide.',
         ],
+        // Messages personnalisés pour éviter les retours techniques côté UI.
+        // @author Philippe-Vu Beaulieu
+        'teacher_code' => [
+            'exists' => 'Le code enseignant est invalide, expiré ou déjà utilisé.',
+        ],
+        'teacher_code_id' => [
+            'exists' => 'Le code enseignant sélectionné est invalide.',
+        ],
     ],
 
     /*

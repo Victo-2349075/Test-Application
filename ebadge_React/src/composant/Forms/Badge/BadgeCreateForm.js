@@ -33,6 +33,9 @@ const badgeDummy = {
  * @returns Le formulaire d'ajout de badge
  * @author Vincent Houle /partiellement
  */
+/**
+ * @author Philippe-Vu Beaulieu
+ */
 export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
 
     const [titleError, setTitleError] = useState("");
@@ -223,7 +226,7 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
                                         }}
                                         loading={!loading}
                                         id="controllable-states-demo"
-                                        options={categories.map((category) => category)}
+                                        options={Array.isArray(categories) ? categories.map((category) => category) : []}
                                         getOptionLabel={(categories) => categories.name}
                                         isOptionEqualToValue={(option, value) => option.id == value.id}
                                         sx={{ width: 300 }}
