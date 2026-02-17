@@ -1,1 +1,11 @@
-{}
+{
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/vendor/**"
+  ],
+  "intelephense.diagnostics.exclude": [
+    "**/vendor/**"
+  ],
+  "intelephense.environment.phpVersion": "8.2.12"
+}

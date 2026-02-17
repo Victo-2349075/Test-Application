@@ -80,3 +80,12 @@ Stabiliser la connexion React ↔ API Laravel et améliorer la gestion d'erreurs
   - Utilisation de `getUserFriendlyErrorMessage` / `error.userFriendlyMessage` pour afficher un message propre quand le back-end est injoignable.
   - Ajout d'un affichage d'erreur global dans l'inscription (`errors.api`) pour éviter les erreurs noir/rouge non contrôlées.
   - Commentaires en français et ajout de `@author Philippe-Vu Beaulieu` sur les sections modifiées.
+
+
+### 8) Correction des faux positifs Intelephense dans vendor Laravel
+- Fichier:
+  - `.vscode/settings.json`
+- Actions:
+  - Exclusion de `vendor/**` des diagnostics Intelephense pour éviter les erreurs de typage sur le code framework (méthodes `render`, `context`, `getStatusCode`, etc.).
+  - Alignement de la version PHP Intelephense sur `8.2.12`.
+  - @author Philippe-Vu Beaulieu
