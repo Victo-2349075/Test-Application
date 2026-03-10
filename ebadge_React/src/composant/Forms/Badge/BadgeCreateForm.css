@@ -1,7 +1,8 @@
 .badge-create-layout {
     width: 100%;
     min-height: 100vh;
-    padding: 8px;
+    /* Barre collée en haut de la page. @author Philippe-Vu Beaulieu */
+    padding: 0;
     box-sizing: border-box;
     background: #efefef;
 }
@@ -15,7 +16,7 @@
     border-top: 0;
     display: grid;
     grid-template-columns: 190px 1fr;
-    min-height: calc(100vh - 74px);
+    min-height: calc(100vh - 64px);
 }
 
 .badge-create-sidebar-placeholder {
@@ -27,31 +28,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 20px 32px;
+    padding: 36px 28px 48px;
 }
 
 .badge-create-form-title {
-    margin: 0 0 24px;
-    font-size: 2rem;
+    margin: 0 0 36px;
+    font-size: 2.45rem;
     font-weight: 700;
 }
 
 .badge-create-form-card {
-    width: min(1180px, 100%);
+    /* Bloc de création agrandi (environ 2x visuellement). @author Philippe-Vu Beaulieu */
+    width: min(1640px, 100%);
     border: 2px solid #1f1f1f;
-    border-radius: 56px;
+    border-radius: 64px;
     background-color: #f7f7f7;
-    padding: 44px 52px;
+    padding: 70px 82px;
     display: flex;
-    gap: 42px;
+    gap: 64px;
     justify-content: space-between;
+    min-height: 760px;
 }
 
 form.create-badge {
-    width: 62%;
+    width: 64%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 26px;
 }
 
 .badge-create-form-category-selector {
@@ -60,23 +63,25 @@ form.create-badge {
 
 .badge-create-image-button {
     width: 100%;
-    min-height: 48px;
+    min-height: 64px;
     border: 1px solid #1f1f1f !important;
     color: #1f1f1f !important;
     letter-spacing: 0.03em;
+    font-size: 1.02rem !important;
 }
 
 .badge-create-form-button-submit {
     display: flex;
-    gap: 18px;
-    margin-top: 6px;
+    gap: 24px;
+    margin-top: 12px;
 }
 
 .badge-create-primary-action,
 .badge-create-secondary-action {
     flex: 1;
-    min-height: 46px;
+    min-height: 64px;
     border-radius: 8px !important;
+    font-size: 1.08rem !important;
 }
 
 .badge-create-primary-action {
@@ -89,7 +94,7 @@ form.create-badge {
 }
 
 .badge-create-form-preview {
-    width: 38%;
+    width: 36%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -97,18 +102,22 @@ form.create-badge {
 }
 
 .badge-create-form-preview-title {
-    margin: 0 0 16px;
-    font-size: 1.25rem;
+    margin: 0 0 26px;
+    font-size: 2rem;
     font-weight: 500;
     text-align: center;
 }
 
 .badge-create-form-preview-content {
-    width: 230px;
-    height: 230px;
+    width: 380px;
+    height: 380px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.badge-create-form-preview-content .badge-component {
+    transform: scale(1.45);
 }
 
 .message-error-form {
