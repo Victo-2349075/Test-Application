@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '@mui/material';
 import {
+    AppBar,
+    Toolbar,
+    Typography,
     Button,
     TextField,
     Autocomplete,
@@ -12,6 +15,8 @@ import {
     Alert
 } from '@mui/material';
 import { PhotoCamera, Check } from '@mui/icons-material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom';
 import Api from '../../../utils/Api';
 import BadgeComponent from '../../PageProfil/BadgeComponent';
 import './BadgeCreateForm.css';
@@ -165,14 +170,35 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
     return (
         <div className="badge-create-layout">
             {/*
-                Barre du haut dédiée à l'écran de création.
+                Réutilisation de la barre existante du site (même style que l'administration).
                 @author Philippe-Vu Beaulieu
             */}
-            <header className="badge-create-topbar">
-                <div className="badge-create-topbar-left">Retour au site</div>
-                <div className="badge-create-topbar-center">E-Badge | Administration</div>
-                <div className="badge-create-topbar-right">ASSIGNER DES BADGES</div>
-            </header>
+            <AppBar position="static" className="badge-create-existing-topbar">
+                <Toolbar>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        component={Link}
+                        to="/"
+                        sx={{ mr: 3 }}
+                        startIcon={<ArrowBackIcon />}
+                    >
+                        Retour au site
+                    </Button>
+
+                    <Typography variant="h6" noWrap component="div">
+                        E-Badge | Administration
+                    </Typography>
+
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        sx={{ ml: 'auto' }}
+                    >
+                        Assigner des badges
+                    </Button>
+                </Toolbar>
+            </AppBar>
 
             <div className="badge-create-main-content">
                 {/*
