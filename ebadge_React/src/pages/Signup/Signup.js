@@ -27,6 +27,7 @@ export default function Signup() {
     const [isLoading, setIsLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [showTeacherCode, setShowTeacherCode] = useState(false);
+    const [apiError, setApiError] = useState("");
 
     const [errors, setErrors] = useState({
         username: "",
@@ -51,6 +52,7 @@ export default function Signup() {
             teacher_code: "",
             api: ""
         });
+        setApiError("");
         event.preventDefault();
         if (validateEmail() && validateFirstName() && validateLastName() && validateUsername() &&
             validatePassword() && validatePassword2()) {
@@ -87,7 +89,7 @@ export default function Signup() {
                         // Message de secours lisible quand l'API Laravel est arrêtée/injoignable.
                         // @author Philippe-Vu Beaulieu
                         const message = error?.userFriendlyMessage || getUserFriendlyErrorMessage(error);
-                        setErrors((prevState) => ({ ...prevState, api: message }));
+                        setApiError(message);
                     }
 
                     setIsLoading(false);
@@ -371,9 +373,9 @@ export default function Signup() {
                             </Box>
 
 
-                            {errors.api.length !== 0 && (
+                            {apiError.length !== 0 && (
                                 <Typography color="error" sx={{ mt: 1, textAlign: "center" }}>
-                                    {errors.api}
+                                    {apiError}
                                 </Typography>
                             )}
 

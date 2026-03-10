@@ -21,6 +21,12 @@ function getApiBaseUrl() {
   return "/api";
 }
 
+function getAuthToken() {
+  // Centralisation volontaire: permettra de brancher un Context React plus tard sans modifier l'interceptor.
+  // @author Philippe-Vu Beaulieu
+  return localStorage.getItem("token");
+}
+
 let axiosInstance = axios.create({
   baseURL: getApiBaseUrl(),
   responseType: "json",
@@ -33,7 +39,7 @@ let axiosInstance = axios.create({
 // Avant d'exécuter une requête, on ajoute le token dans le header.
 axiosInstance.interceptors.request.use(
   function (config) {
-    const token = localStorage.getItem("token");
+    const token = getAuthToken();
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

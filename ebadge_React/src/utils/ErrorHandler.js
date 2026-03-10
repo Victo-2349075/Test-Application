@@ -6,27 +6,35 @@
  */
 
 /**
- * Normalise certains messages de validation techniques en messages utilisateur.
+ * Extrait le premier message de validation Laravel lorsqu'il existe.
+ *
+ * @author Philippe-Vu Beaulieu
+ * @param {unknown} errors Objet "errors" Laravel
+ * @returns {string} Message brut ou chaîne vide
+ */
+function getFirstValidationError(errors) {
+  if (!errors || typeof errors !== "object") {
+    return "";
+  }
+
+  const firstFieldErrors = Object.values(errors).find((value) => Array.isArray(value) && value.length > 0);
+
+  return typeof firstFieldErrors?.[0] === "string" ? firstFieldErrors[0] : "";
+}
+
+/**
+ * Normalise les messages techniques les plus fréquents en message utilisateur.
  *
  * @author Philippe-Vu Beaulieu
  * @param {string} message Message brut reçu de l'API
  * @returns {string} Message utilisateur normalisé
  */
 function normalizeValidationMessage(message) {
-  if (typeof message !== "string") {
+  if (typeof message !== "string" || message.trim() === "") {
     return "";
   }
 
-  const normalized = message.toLowerCase();
-
-  if (
-    normalized.includes("teacher code") &&
-    (normalized.includes("sélectionné est invalide") || normalized.includes("selected is invalid"))
-  ) {
-    return "Le code enseignant est invalide, expiré ou déjà utilisé.";
-  }
-
-  if (normalized.includes("teacher_code") && normalized.includes("invalid")) {
+  if (/(teacher[_\s]?code|code enseignant)/i.test(message) && /(selected is invalid|sélectionné est invalide|invalid|invalide)/i.test(message)) {
     return "Le code enseignant est invalide, expiré ou déjà utilisé.";
   }
 
@@ -53,8 +61,12 @@ export function isAxiosHttpError(error) {
  */
 export function getUserFriendlyErrorMessage(error) {
   if (isAxiosHttpError(error)) {
-    const apiMessage = error?.response?.data?.message;
+    const validationMessage = getFirstValidationError(error?.response?.data?.errors);
+    if (validationMessage) {
+      return normalizeValidationMessage(validationMessage);
+    }
 
+    const apiMessage = error?.response?.data?.message;
     if (typeof apiMessage === "string" && apiMessage.trim() !== "") {
       return normalizeValidationMessage(apiMessage);
     }
