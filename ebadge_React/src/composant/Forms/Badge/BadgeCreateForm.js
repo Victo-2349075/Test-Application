@@ -42,9 +42,6 @@ const badgeDummy = {
  * @author Vincent Houle /partiellement
  * @author Philippe-Vu Beaulieu
  */
-/**
- * @author Philippe-Vu Beaulieu
- */
 export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
 
     const [titleError, setTitleError] = useState("");
@@ -166,10 +163,28 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
     };
 
     return (
-        <div className="badge-create-form">
-            <h1 className="badge-create-form-title">Création d'un badge</h1>
+        <div className="badge-create-layout">
+            {/*
+                Barre du haut dédiée à l'écran de création.
+                @author Philippe-Vu Beaulieu
+            */}
+            <header className="badge-create-topbar">
+                <div className="badge-create-topbar-left">Retour au site</div>
+                <div className="badge-create-topbar-center">E-Badge | Administration</div>
+                <div className="badge-create-topbar-right">ASSIGNER DES BADGES</div>
+            </header>
 
-            <div className="badge-create-form-card">
+            <div className="badge-create-main-content">
+                {/*
+                    Zone réservée pour une sidebar (laissée vide à la demande).
+                    @author Philippe-Vu Beaulieu
+                */}
+                <aside className="badge-create-sidebar-placeholder" />
+
+                <div className="badge-create-form">
+                    <h1 className="badge-create-form-title">Création d'un badge</h1>
+
+                    <div className="badge-create-form-card">
                 <form className='create-badge'>
                     <TextField
                         id="title"
@@ -318,10 +333,12 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
                 </form>
 
                 <div className="badge-create-form-preview">
-                    <h2>Prévisualisation</h2>
+                    <h2 className="badge-create-form-preview-title">Prévisualisation</h2>
                     <div className="badge-create-form-preview-content">
                         <BadgeComponent badge={badge} />
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
