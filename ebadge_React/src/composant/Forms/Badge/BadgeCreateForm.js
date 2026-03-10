@@ -42,6 +42,9 @@ const badgeDummy = {
  * @author Vincent Houle /partiellement
  * @author Philippe-Vu Beaulieu
  */
+/**
+ * @author Philippe-Vu Beaulieu
+ */
 export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
 
     const [titleError, setTitleError] = useState("");
