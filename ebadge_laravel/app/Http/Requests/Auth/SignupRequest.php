@@ -32,4 +32,20 @@ class SignupRequest extends FormRequest
             ],
         ];
     }
+
+    /**
+     * Définit les messages de validation personnalisés.
+     *
+     * @return array
+     * @author Philippe-Vu Beaulieu
+     */
+    public function messages()
+    {
+        return [
+            'teacher_code.exists' => 'Le code enseignant est invalide, expiré ou déjà utilisé.',
+            'teacher_code.string' => 'Le code enseignant doit être une chaîne de caractères valide.',
+        ];
+    }
+
 }
+
