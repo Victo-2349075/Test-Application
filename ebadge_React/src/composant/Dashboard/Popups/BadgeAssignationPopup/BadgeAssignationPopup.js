@@ -181,10 +181,12 @@ export default function BadgeAssignationPopup({
           <DialogContentText>
             <form>
               <FormControl fullWidth sx={{ gap: "20px" }}>
+                {/* Sécurise les listes Autocomplete quand l'API retourne une structure inattendue.
+                    @author Philippe-Vu Beaulieu */}
                 <Autocomplete
                   multiple
                   id="badge-select"
-                  options={badgesLeft}
+                  options={Array.isArray(badgesLeft) ? badgesLeft : []}
                   value={badgesSelected}
                   getOptionLabel={(option) => option.title}
                   loading={loadingBadges}
@@ -214,7 +216,7 @@ export default function BadgeAssignationPopup({
                 <Autocomplete
                   multiple
                   id="user-select"
-                  options={usersLeft}
+                  options={Array.isArray(usersLeft) ? usersLeft : []}
                   value={usersSelected}
                   getOptionLabel={(option) =>
                     option.first_name + " " + option.last_name
