@@ -35,7 +35,8 @@ export default function Signup() {
         password: "",
         first_name: "",
         last_name: "",
-        teacher_code: ""
+        teacher_code: "",
+        api: ""
     })
 
     const formatEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -48,7 +49,8 @@ export default function Signup() {
             password: "",
             first_name: "",
             last_name: "",
-            teacher_code: ""
+            teacher_code: "",
+            api: ""
         });
         setApiError("");
         event.preventDefault();
