@@ -21,6 +21,7 @@ import Api from '../../../utils/Api';
 import BadgeComponent from '../../PageProfil/BadgeComponent';
 import './BadgeCreateForm.css';
 import Loading from '../../Loading/LoadingComponent';
+import AdminSidebar from '../../layout/AdminSidebar/AdminSidebar';
 
 /**
  *  Fonction qui vérifie si l'url est une image
@@ -205,7 +206,7 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
                     Zone réservée pour une sidebar (laissée vide à la demande).
                     @author Philippe-Vu Beaulieu
                 */}
-                <aside className="badge-create-sidebar-placeholder" />
+                <AdminSidebar />
 
                 <div className="badge-create-form">
                     <h1 className="badge-create-form-title">Création d'un badge</h1>
