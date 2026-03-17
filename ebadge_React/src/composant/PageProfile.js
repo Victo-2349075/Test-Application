@@ -495,13 +495,15 @@ export default function PageProfile() {
             <DialogTitle>Badges à épingler</DialogTitle>
             {(!loadingBadge || loaded) && <Loading />}
             <DialogContent className={"badge-popup"}>
+              {/* Sécurise les options Autocomplete pour éviter le crash "options.filter".
+                  @author Philippe-Vu Beaulieu */}
               <Autocomplete
                 id="badge-select"
                 className="badge-selector"
-                options={otherBadges}
+                options={Array.isArray(otherBadges) ? otherBadges : []}
                 getOptionLabel={(option) => option.title}
                 value={
-                  otherBadges.find((badge) => badge.id === badgeIdToFavorite) ||
+                  (Array.isArray(otherBadges) ? otherBadges : []).find((badge) => badge.id === badgeIdToFavorite) ||
                   null
                 }
                 onChange={(event, newValue) =>
