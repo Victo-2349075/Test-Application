@@ -32,6 +32,9 @@ function isImage(url) {
  * @author Vincent Houle /partiellement
  * @author Philippe-Vu Beaulieu
  */
+/**
+ * @author Philippe-Vu Beaulieu
+ */
 export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge, errorBadge }) {
     const badgeDummy = structuredClone(selectedBadge);
     const [titleError, setTitleError] = useState('');
