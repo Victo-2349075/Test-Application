@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import Loading from '../../composant/Loading/LoadingComponent';
 import PoliciesHelper from '../../policies/PoliciesHelper';
 import Role from '../../policies/Role';
+import { getUserFriendlyErrorMessage } from '../../utils/ErrorHandler';
 
 class Login extends React.Component {
     constructor(props) {
@@ -108,6 +109,11 @@ class Login extends React.Component {
                     }
                     console.error(error.response.data);
                 } else {
+                    // Message lisible si le serveur API est indisponible.
+                    // @author Philippe-Vu Beaulieu
+                    const message = error?.userFriendlyMessage || getUserFriendlyErrorMessage(error);
+                    this.setState({ identifierError: message });
+                    this.setState({ passwordError: '' });
                     console.error(error);
                 }
             });
