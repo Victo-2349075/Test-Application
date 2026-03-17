@@ -32,9 +32,6 @@ function isImage(url) {
  * @author Vincent Houle /partiellement
  * @author Philippe-Vu Beaulieu
  */
-/**
- * @author Philippe-Vu Beaulieu
- */
 export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge, errorBadge }) {
     const badgeDummy = structuredClone(selectedBadge);
     const [titleError, setTitleError] = useState('');
@@ -318,7 +315,14 @@ export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge,
                             </Dialog>
 
                             <div className="badge-create-form-button-submit">
-                                <Button onClick={handleSubmit} variant="contained" className="badge-create-primary-action">
+                                <Button
+                                    onClick={handleSubmit}
+                                    variant="contained"
+                                    className="badge-create-primary-action"
+                                    // Désactive l'animation de clic (ripple) demandée sur le bouton MODIFIER.
+                                    // @author Philippe-Vu Beaulieu
+                                    disableRipple
+                                >
                                     MODIFIER
                                 </Button>
                                 <Button variant="outlined" onClick={handleClose} className="badge-create-secondary-action">

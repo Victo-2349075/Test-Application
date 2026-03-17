@@ -343,7 +343,14 @@ export default function BadgeCreateForm({ handleClose, addBadge, errorBadge }) {
                     </Dialog>
 
                     <div className="badge-create-form-button-submit">
-                        <Button onClick={handleSubmit} variant="contained" className="badge-create-primary-action">
+                        <Button
+                            onClick={handleSubmit}
+                            variant="contained"
+                            className="badge-create-primary-action"
+                            // Désactive l'animation de clic (ripple) demandée sur le bouton CRÉER.
+                            // @author Philippe-Vu Beaulieu
+                            disableRipple
+                        >
                             CRÉER
                         </Button>
                         <Button
