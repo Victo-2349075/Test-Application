@@ -33,7 +33,13 @@ function isImage(url) {
  * @author Philippe-Vu Beaulieu
  */
 export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge, errorBadge }) {
-    const badgeDummy = structuredClone(selectedBadge);
+    const badgeDummy = selectedBadge ? structuredClone(selectedBadge) : {
+        id: '',
+        title: '',
+        description: '',
+        imagePath: null,
+        category: null
+    };
     const [titleError, setTitleError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
     const [openImageDialog, setOpenImageDialog] = useState(false);
@@ -43,6 +49,23 @@ export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge,
 
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        /*
+            Re-synchronise le formulaire avec le badge sélectionné lorsque l'utilisateur
+            ouvre la fenêtre de modification sur un autre badge.
+            @author Philippe-Vu Beaulieu
+        */
+        setBadge(selectedBadge ? structuredClone(selectedBadge) : {
+            id: '',
+            title: '',
+            description: '',
+            imagePath: null,
+            category: null
+        });
+        setTitleError('');
+        setDescriptionError('');
+    }, [selectedBadge]);
 
     useEffect(() => {
         Api.get('/category/').then((response) => {
@@ -140,11 +163,14 @@ export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge,
                 }
             }).then((response) => {
                 editBadge(response.data);
+                /*
+                    Ferme la fenêtre seulement après une sauvegarde confirmée par l'API.
+                    @author Philippe-Vu Beaulieu
+                */
+                handleClose();
             }).catch((_) => {
                 errorBadge('Erreur lors de la modification du badge');
             });
-
-            handleClose();
         }
     };
 
@@ -334,7 +360,16 @@ export default function BadgeUpdateForm({ handleClose, editBadge, selectedBadge,
                         <div className="badge-create-form-preview">
                             <h2 className="badge-create-form-preview-title">Prévisualisation</h2>
                             <div className="badge-create-form-preview-content">
-                                <BadgeComponent badge={badge} />
+                                <div className="badge-create-form-preview-badge">
+                                    <BadgeComponent badge={badge} />
+                                    {/*
+                                        Centre le titre directement dans l'image de prévisualisation du badge.
+                                        @author Philippe-Vu Beaulieu
+                                    */}
+                                    <div className="badge-create-form-preview-badge-title">
+                                        {badge.title || "Badge sans titre"}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

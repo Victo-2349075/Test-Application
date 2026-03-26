@@ -61,12 +61,18 @@ class BadgesTab extends React.Component {
 
     editBadge(badge) {
         const badges = this.state.badges.map(b => {
-            if (b.id === badge.id) {
+            /*
+                Évite les faux négatifs de comparaison si l'ID revient en string depuis l'API.
+                @author Philippe-Vu Beaulieu
+            */
+            if (String(b.id) === String(badge.id)) {
                 return badge;
             }
             return b;
         });
         this.setState({ badges, successMessage: 'Le badge a été modifié avec succès !', showSuccessMessage: true });
+        // Recharge la liste complète pour refléter immédiatement les données finales en base.
+        this.getBadges();
     }
 
     deleteBadge(badge) {

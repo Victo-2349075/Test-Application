@@ -112,8 +112,38 @@ form.create-badge {
     justify-content: center;
 }
 
+.badge-create-form-preview-badge {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .badge-create-form-preview-content .badge-component {
     transform: scale(1.45);
+}
+
+.badge-create-form-preview-badge-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 190px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+    z-index: 30;
+    pointer-events: none;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    /* Centre visuellement le titre à l'intérieur de l'image du badge. @author Philippe-Vu Beaulieu */
+    padding: 0 10px;
 }
 
 .message-error-form {
