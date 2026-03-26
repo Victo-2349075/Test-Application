@@ -141,16 +141,17 @@ class BadgeGrid extends React.Component {
    * donne une valeur a this.state.row lorsque props est chargé
    * ce code a été géner en partie par chatGPT https://chatgpt.com
    */
-  componentDidUpdate(prevState) {
-    const newRows = this.props.rows;
+  componentDidUpdate(prevProps) {
+    const newRows = this.props.rows ?? [];
 
-  if (
-    newRows.length !== prevState.rows.length ||
-    !this.state.rows.every((row, i) => row.id === newRows[i]?.id)
-  ) {
-    this.setState({ rows: newRows.map((row) => ({ ...row })) });
-  }
-
+    /*
+      Synchronise la grille dès que les props changent (même si les IDs restent identiques),
+      afin d'afficher immédiatement les nouveaux titre/description/image après "Modifier".
+      @author Philippe-Vu Beaulieu
+    */
+    if (newRows !== prevProps.rows) {
+      this.setState({ rows: newRows.map((row) => ({ ...row })) });
+    }
   }
   
 
