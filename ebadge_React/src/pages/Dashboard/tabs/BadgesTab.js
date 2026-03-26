@@ -3,14 +3,11 @@ import Api from '../../../utils/Api';
 import BadgeGrid from '../../../composant/Dashboard/BadgeGrid';
 import Item from '@mui/material/Grid';
 import BadgeCreateForm from '../../../composant/Forms/Badge/BadgeCreateForm';
-import { Button, Dialog, Slide, Snackbar, Alert } from '@mui/material';
+import { Button, Dialog, Snackbar, Alert } from '@mui/material';
 import './../Dashboard.css';
 import { Add } from '@mui/icons-material';
 import Loading from '../../../composant/Loading/LoadingComponent';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
 
 class BadgesTab extends React.Component {
     constructor(props) {
@@ -64,12 +61,18 @@ class BadgesTab extends React.Component {
 
     editBadge(badge) {
         const badges = this.state.badges.map(b => {
-            if (b.id === badge.id) {
+            /*
+                Évite les faux négatifs de comparaison si l'ID revient en string depuis l'API.
+                @author Philippe-Vu Beaulieu
+            */
+            if (String(b.id) === String(badge.id)) {
                 return badge;
             }
             return b;
         });
         this.setState({ badges, successMessage: 'Le badge a été modifié avec succès !', showSuccessMessage: true });
+        // Recharge la liste complète pour refléter immédiatement les données finales en base.
+        this.getBadges();
     }
 
     deleteBadge(badge) {
@@ -100,7 +103,9 @@ class BadgesTab extends React.Component {
                 <div className="title">
                     <h4>Liste des badges</h4>
                     <Button variant="contained" onClick={this.handleBadgeForm} startIcon={<Add></Add>}>Créer un badge</Button>
-                    <Dialog fullScreen open={this.state.closeBadgeForm} onClose={this.handleBadgeForm} TransitionComponent={Transition}>
+                    {/* Suppression de l'animation d'ouverture/fermeture de la fenêtre de création.
+                        @author Philippe-Vu Beaulieu */}
+                    <Dialog fullScreen open={this.state.closeBadgeForm} onClose={this.handleBadgeForm} transitionDuration={0}>
                         <BadgeCreateForm handleClose={this.handleBadgeForm} addBadge={this.addBadge} errorBadge={this.errorBadge} />
                     </Dialog>
                 </div>

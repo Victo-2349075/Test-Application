@@ -1,14 +1,11 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Avatar, Slide, Dialog, Switch } from "@mui/material";
+import { Button, Avatar, Dialog, Switch } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import BadgeDeleteAction from "./Popups/BadgeDeletePopup/BadgeDeletePopup";
 import BadgeUpdateForm from "../Forms/Badge/BadgeUpdateForm";
 import Api, { getResource } from "../../utils/Api";
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 class BadgeGrid extends React.Component {
   constructor(props) {
@@ -144,16 +141,17 @@ class BadgeGrid extends React.Component {
    * donne une valeur a this.state.row lorsque props est chargé
    * ce code a été géner en partie par chatGPT https://chatgpt.com
    */
-  componentDidUpdate(prevState) {
-    const newRows = this.props.rows;
+  componentDidUpdate(prevProps) {
+    const newRows = this.props.rows ?? [];
 
-  if (
-    newRows.length !== prevState.rows.length ||
-    !this.state.rows.every((row, i) => row.id === newRows[i]?.id)
-  ) {
-    this.setState({ rows: newRows.map((row) => ({ ...row })) });
-  }
-
+    /*
+      Synchronise la grille dès que les props changent (même si les IDs restent identiques),
+      afin d'afficher immédiatement les nouveaux titre/description/image après "Modifier".
+      @author Philippe-Vu Beaulieu
+    */
+    if (newRows !== prevProps.rows) {
+      this.setState({ rows: newRows.map((row) => ({ ...row })) });
+    }
   }
   
 
@@ -218,11 +216,13 @@ class BadgeGrid extends React.Component {
           deleteBadge={this.props.deleteBadge}
           errorBadge={this.props.errorBadge ?? ""}
         />
+        {/* Suppression de l'animation d'ouverture/fermeture de la fenêtre de modification.
+            @author Philippe-Vu Beaulieu */}
         <Dialog
           fullScreen
           open={this.state.openEditDialog}
           onClose={this.handleCloseEditDialog}
-          TransitionComponent={Transition}
+          transitionDuration={0}
         >
           <BadgeUpdateForm
             handleClose={this.handleCloseEditDialog}
